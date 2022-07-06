@@ -1,0 +1,71 @@
+<canvas id="pet-screen" width="400" height="300" style="border:1px solid #c3c3c3;"></canvas>
+
+</canvas>
+<script>
+    const cv = document.getElementById('pet-screen')
+    const ctx = cv.getContext('2d')
+
+    let pet = {
+        x: 200,
+        y: 100,
+        size: 20
+    }
+
+    let director = {
+        x: 1,
+        y: 1,
+    }
+
+    const draw_pet = function (x, y, size) {
+        ctx.restore() 
+        ctx.beginPath();
+        ctx.arc(x, y, pet.size, 0, 2 * Math.PI);
+        ctx.stroke();
+    }
+
+    const clear_screen = function (params) {
+        ctx.restore() 
+        ctx.fillStyle = 'white'
+        ctx.fillRect(0,0,400, 300);
+    }
+    
+    const move_pet =  function(x, y) {
+        draw_pet(x, y, pet.size)
+    }
+
+    const change_direct = function (x, y) {
+        pet.x += x
+        pet.y += y
+    }
+
+    document.addEventListener('keydown', (e) => {
+        console.log(e.code)
+        switch (e.code) {
+            case 'ArrowDown':
+                director.y += 2
+                break;
+
+            case 'ArrowUp':
+                director.y -= 2
+                break;
+        
+
+            case 'ArrowLeft':
+                director.x -= 2
+                break;
+            
+            case 'ArrowRight':
+                director.x += 2
+                break;
+        
+            default:
+                break;
+        }
+    })
+
+    setInterval(() => {
+        clear_screen()
+        move_pet(pet.x, pet.y)
+        change_direct(director.x, director.y)
+    }, 30);
+</script>
